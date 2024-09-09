@@ -1,0 +1,22 @@
+name: "🎯 Pushed"
+
+on:
+  push:  # プッシュに反応
+    branches:
+      - '*'  # 全ブランチへのpushに反応
+  pull_request:  # プルリクエストに反応
+    types: [opened, synchronize]  # プルリクエストがオープン、更新された場合にトリガー
+
+jobs:
+  test:
+    name: '✅ テスト'
+    uses: ./.github/workflows/_test.yml
+    with:
+      python-version: '3.12'
+
+  check-code:
+    name: '✅ コードチェック'
+    uses: ./.github/workflows/_check-code.yml
+    with:
+      python-version: '3.12'
+      allow-autocommit: false
