@@ -115,6 +115,7 @@ pytest -v ./test
    - 🖊️ [slf4py](https://pypi.org/project/slf4py/) : for logging.
    - 🔌 [di4injector](https://pypi.org/project/di4injector/) : for DI injection.
  - 💾 DB: MySQL / Redis
+ - 🔀 クライアント連携: GraphQL
  - 🚀 CI: [GitHub Actions](https://docs.github.com/ja/actions)
 
 ### 🚀 フロントエンド
