@@ -5,6 +5,13 @@
   <a href="https://coverage-badge.samuelcolvin.workers.dev/redirect/gtaiyou24/saas-dashboard-nextjs-fastapi" target="_blank"><img src="https://coverage-badge.samuelcolvin.workers.dev/gtaiyou24/saas-dashboard-nextjs-fastapi.svg" alt="Coverage"></a>
 </div>
 
+## 🖼️ 機能
+### 🔐 ユーザー認証
+
+ - 🔐 ユーザーが、ユーザー名 / メアド / パスワード 指定で新規登録できる
+ - 🔐 ユーザーが、メアド / パスワード 指定でログインできる
+
+
 ## ❓使い方
 <details><summary><b>🏃 起動する</b></summary>
 
@@ -91,8 +98,6 @@ pytest -v ./test
  - 🐋 DevOps: [Docker Compose](https://www.docker.com)
  - 🚨 エラー/ログ監視ツール: [Sentry](https://sentry.io/welcome/) / [New Relic](https://newrelic.com/jp)
  - ✉️ メールサービス: Gmail
-
----
 
 ## 📋機能
 ### 🔐ユーザー認証
