@@ -73,22 +73,23 @@ pytest -v ./test
    - 🖊️ [slf4py](https://pypi.org/project/slf4py/) : for logging.
    - 🔌 [di4injector](https://pypi.org/project/di4injector/) : for DI injection.
  - 💾 DB: MySQL / Redis
- - 🚀 CI: GitHub Ations
+ - 🚀 CI: [GitHub Actions](https://docs.github.com/ja/actions)
 
 ### 🚀 フロントエンド
 
  - ⚙️ 開発言語: TypeScript
- - ⚡️ フレームワーク: Next.js App Router
- - 🧰 ライブラリ: Auth.js(NextAuth V5)
- - 🎨 CSS: Tailwind / shadcn/ui / Headless UI
- - 🚀 CI: GitHub Ations
+ - ⚡️ フレームワーク: [Next.js 14 App Router](https://nextjs.org/docs)
+ - 🧰 ライブラリ:
+   - 🔐 [Auth.js(NextAuth.js V5)](https://authjs.dev/)
+ - 🎨 CSS: [Tailwind](https://tailwindcss.com/) / [shadcn/ui](https://ui.shadcn.com/) / [Headless UI](https://headlessui.com/)
+ - 🚀 CI: [GitHub Actions](https://docs.github.com/ja/actions)
 
 ### ☁️ インフラ
 
- - ☁️ クラウドサービス: GCP Cloud Run / Neon / Upstash
+ - ☁️ クラウドサービス: GCP Cloud Run / [Neon](https://neon.tech/) / [Upstash](https://upstash.com/)
  - 🚀 IaC: Terraform
  - 🐋 DevOps: [Docker Compose](https://www.docker.com)
- - 👀 エラー/ログ監視ツール: Sentry / New Relic
+ - 🚨 エラー/ログ監視ツール: [Sentry](https://sentry.io/welcome/) / [New Relic](https://newrelic.com/jp)
  - ✉️ メールサービス: Gmail
 
 ---
