@@ -67,7 +67,11 @@ pytest -v ./test
 
  - ⚙️ 開発言語: Python
  - ⚡️ フレームワーク: [FastAPI](https://fastapi.tiangolo.com/)
- - 🧰 ライブラリ: [SQLAlchemy](https://www.sqlalchemy.org/) / [PyTest](https://docs.pytest.org/en/stable/)
+ - 🧰 ライブラリ:
+   - 💾 [SQLAlchemy](https://www.sqlalchemy.org/) : Python SQL DataBase interactions (ORM).
+   - ✅ [PyTest](https://docs.pytest.org/en/stable/) : for python test.
+   - 🖊️ [slf4py](https://pypi.org/project/slf4py/) : for logging.
+   - 🔌 [di4injector](https://pypi.org/project/di4injector/) : for DI injection.
  - 💾 DB: MySQL / Redis
  - 🚀 CI: GitHub Ations
 
