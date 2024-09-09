@@ -66,8 +66,8 @@ pytest -v ./test
 ### ⚡️ バックエンド
 
  - ⚙️ 開発言語: Python
- - ⚡️ フレームワーク: FastAPI
- - 🧰 ライブラリ: SQLAlchemy
+ - ⚡️ フレームワーク: [FastAPI](https://fastapi.tiangolo.com/)
+ - 🧰 ライブラリ: [SQLAlchemy](https://www.sqlalchemy.org/) / [PyTest](https://docs.pytest.org/en/stable/)
  - 💾 DB: MySQL / Redis
  - 🚀 CI: GitHub Ations
 
