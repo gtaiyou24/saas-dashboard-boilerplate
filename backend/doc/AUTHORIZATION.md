@@ -18,11 +18,13 @@ sequenceDiagram
     B->>-C: status=200
     Note left of B: アクセストークン, リフレッシュトークン
     Note left of C: アクセストークン, リフレッシュトークンは<br>クライアントで保持し通信時などに利用
+    
     C->>+B: リクエスト(GET /v1/xxx/yyy)
     Note right of C: headers { Authorization: Bearer <アクセストークン> }
-    b-->>-C: status=200
+    B->>-C: status=200
     Note left of B: payload
-    Note right of R: access_token<br>refresh_token<br>session<br>は有効期限が<br>くると自然消滅
+
+    Note right of R: アクセストークン<br>リフレッシュトークン<br>セッション<br>は有効期限が<br>くると自然消滅
 ```
 
 ## 🔐トークンのリフレッシュ
