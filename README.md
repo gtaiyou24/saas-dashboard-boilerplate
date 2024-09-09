@@ -1,8 +1,8 @@
 <h1 align="center">SaaS Dashboard</h1>
 
 <div align="center">
-  <a href="https://github.com/gtaiyou24/saas-dashboard-nextjs-fastapi/actions?query=workflow%3ATest" target="_blank"><img src="https://github.com/gtaiyou24/saas-dashboard-nextjs-fastapi/workflows/Test/badge.svg" alt="Test"></a>
-  <a href="https://coverage-badge.samuelcolvin.workers.dev/redirect/gtaiyou24/saas-dashboard-nextjs-fastapi" target="_blank"><img src="https://coverage-badge.samuelcolvin.workers.dev/gtaiyou24/saas-dashboard-nextjs-fastapi.svg" alt="Coverage"></a>
+  <a href="https://github.com/gtaiyou24/saas-dashboard/actions?query=workflow%3ATest" target="_blank"><img src="https://github.com/gtaiyou24/saas-dashboard/workflows/Test/badge.svg" alt="Test"></a>
+  <a href="https://coverage-badge.samuelcolvin.workers.dev/redirect/gtaiyou24/saas-dashboard" target="_blank"><img src="https://coverage-badge.samuelcolvin.workers.dev/gtaiyou24/saas-dashboard.svg" alt="Coverage"></a>
 </div>
 
 ## 🖼️ 機能
