@@ -79,12 +79,13 @@ pytest -v ./test
  - 🎨 CSS: Tailwind / shadcn/ui / Headless UI
  - 🚀 CI: GitHub Ations
 
-### 🐋 インフラ
+### ☁️ インフラ
 
  - ☁️ クラウドサービス: GCP Cloud Run / Neon / Upstash
  - 🚀 IaC: Terraform
- - 🐋 DevOps: Docker Compose
+ - 🐋 DevOps: [Docker Compose](https://www.docker.com)
  - 👀 エラー/ログ監視ツール: Sentry / New Relic
+ - ✉️ メールサービス: Gmail
 
 ---
 
