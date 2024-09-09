@@ -62,6 +62,33 @@ pytest -v ./test
 </details>
 
 ---
+## 🛠️ 技術スタック
+### ⚡️ バックエンド
+
+ - ⚙️ 開発言語: Python
+ - ⚡️ フレームワーク: FastAPI
+ - 🧰 ライブラリ: SQLAlchemy
+ - 💾 DB: MySQL / Redis
+ - 🚀 CI: GitHub Ations
+
+### 🚀 フロントエンド
+
+ - ⚙️ 開発言語: TypeScript
+ - ⚡️ フレームワーク: Next.js App Router
+ - 🧰 ライブラリ: Auth.js(NextAuth V5)
+ - 🎨 CSS: Tailwind / shadcn/ui / Headless UI
+ - 🚀 CI: GitHub Ations
+
+### 🐋 インフラ
+
+ - ☁️ クラウドサービス: GCP Cloud Run / Neon / Upstash
+ - 🚀 IaC: Terraform
+ - 🐋 DevOps: Docker Compose
+ - 👀 エラー/ログ監視ツール: Sentry / New Relic
+
+---
 
 ## 📋機能
 ### 🔐ユーザー認証
+
+
