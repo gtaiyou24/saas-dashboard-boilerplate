@@ -134,8 +134,3 @@ pytest -v ./test
  - 🐋 DevOps: [Docker Compose](https://www.docker.com)
  - 🚨 エラー/ログ監視ツール: [Sentry](https://sentry.io/welcome/) / [New Relic](https://newrelic.com/jp)
  - ✉️ メールサービス: Gmail
-
-## 📋機能
-### 🔐ユーザー認証
-
-
