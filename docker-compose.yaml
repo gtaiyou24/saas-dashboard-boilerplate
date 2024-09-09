@@ -1,0 +1,134 @@
+version: "3.4"
+
+x-var: &APP_NAME
+  "saas-dashboard"
+
+services:
+  # FastAPI
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: ${APP_NAME}-backend
+    env_file:
+      - ./backend/.env.local
+      - ./backend/.env
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app/
+    command: "--reload"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -XGET http://localhost:8000/health/check || exit 1"]
+      interval: 60s
+      timeout: 20s
+      retries: 3
+      start_period: 30s
+    depends_on:
+      mysql:
+        condition: service_healthy
+      postgresql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  # Next.js
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.local
+    container_name: ${APP_NAME}-frontend
+    volumes:
+      - ./frontend:/app
+    environment:
+      - WATCHPACK_POLLING=true
+    tty: true
+    command: sh -c "npm install && npm run dev"
+    ports:
+      - "3000:3000"
+    depends_on:
+      backend:
+        condition: service_healthy
+
+  # MySQL
+  mysql:
+    image: mysql:8.0
+    platform: linux/x86_64
+    container_name: ${APP_NAME}-mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=pass
+      - MYSQL_DATABASE=analytics-gpt
+      - TZ=Asia/Tokyo
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./infrastructure/mysql/conf.d:/etc/mysql/conf.d
+      - analytics-gpt-mysql-volume:/var/lib/mysql
+    tty: true
+    healthcheck:
+      test: mysqladmin ping -h 127.0.0.1 -u$$DATABASE_USERNAME -p$$DATABASE_PASSWORD
+      interval: 60s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # Postgresql
+  postgresql:
+    image: postgres:14
+    platform: linux/x86_64
+    container_name: ${APP_NAME}-postgresql
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=pass
+      - POSTGRES_DB=analytics-gpt
+      - TZ=Asia/Tokyo
+    ports:
+      - "5432:5432"
+    volumes:
+      - ${APP_NAME}-postgresql-volume:/var/lib/postgresql
+    tty: true
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 60s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  redis:
+    image: redis:7.4
+    platform: linux/x86_64
+    container_name: ${APP_NAME}-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - ${APP_NAME}-redis-volume:/data
+    tty: true
+    healthcheck:
+      test: [ 'CMD', 'redis-cli', 'ping' ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  # Mail Server
+  mailhog:
+    image: mailhog/mailhog
+    container_name: ${APP_NAME}-mailhog
+    ports:
+      - "8025:8025"
+
+volumes:
+  # MySQL
+  ${APP_NAME}-mysql-volume:
+    driver: 'local'
+  # Postgresql
+  ${APP_NAME}-postgresql-volume:
+    driver: 'local'
+  # redis
+  ${APP_NAME}-redis-volume:
+    driver: 'local'
+
+networks:
+  api-services:
+    external: true

@@ -109,6 +109,7 @@ pytest -v ./test
 
  - ⚙️ 開発言語: Python
  - ⚡️ フレームワーク: [FastAPI](https://fastapi.tiangolo.com/)
+ - ✍️ 設計手法: [DDD(ドメイン駆動設計)](https://amzn.to/4gjk6AQ)
  - 🧰 ライブラリ:
    - 💾 [SQLAlchemy](https://www.sqlalchemy.org/) : Python SQL DataBase interactions (ORM).
    - ✅ [PyTest](https://docs.pytest.org/en/stable/) : for python test.
