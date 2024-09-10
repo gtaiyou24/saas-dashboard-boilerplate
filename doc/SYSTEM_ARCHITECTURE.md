@@ -73,18 +73,17 @@ architecture-beta
     service db(database)[Cloud SQL] in vpc
     service cdn(internet)[Cloud CDN]
     service storage(disk)[Cloud Storage]
-    
-    junction from_backend
 
     internet:T --> L:cdn
     internet:R --> L:alb
     
+    cdn:R --> L:storage
+    
     alb:R --> L:frontend
     frontend:R --> L:backend
 
-    backend:R -- L:from_backend
-    from_backend:R --> L:db
-    from_backend:B --> L:storage
+    backend:R -- L:db
+    backend:T --> R:storage
 ```
 
 ## 🛠️ フェーズ2 - API Gateway アーキテクチャ
