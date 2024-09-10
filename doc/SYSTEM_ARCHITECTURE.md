@@ -8,7 +8,6 @@ architecture-beta
     service backend(server)[Backend] in api
     service db(database)[Database] in api
     service storage(disk)[Storage] in api
-    service monitoring(disk)[Monitoring] in api
     
     junction jct1
     junction jct2
@@ -17,7 +16,6 @@ architecture-beta
     jct1:R --> L:db
     jct1:B -- T:jct2
     jct2:R --> L:storage
-    jct2:B --> L:monitoring
 ```
 
 ## 🛠️ フェーズ2 - API Gateway アーキテクチャ
