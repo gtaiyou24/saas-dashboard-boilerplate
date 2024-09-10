@@ -68,8 +68,8 @@ architecture-beta
 
     service internet(cloud)[Internet]
     service alb(internet)[Application Load Balancer]
-    service frontend(server)[Cloud Run]
-    service backend(server)[Cloud Run]
+    service frontend(server)[Cloud Run Frontend]
+    service backend(server)[Cloud Run Backend]
     service db(database)[Cloud SQL] in vpc
     service cdn(internet)[Cloud CDN]
     service storage(disk)[Cloud Storage]
