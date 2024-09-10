@@ -5,17 +5,17 @@
 architecture-beta
     group api(cloud)[API]
 
+    service frontend(server)[Frontend] in api
     service backend(server)[Backend] in api
     service db(database)[Database] in api
     service storage(disk)[Storage] in api
     
-    junction jct1
-    junction jct2
+    junction fromBackend
 
-    backend:R -- L:jct1
-    jct1:R --> L:db
-    jct1:B -- T:jct2
-    jct2:R --> L:storage
+    frontend:R --> L:backend
+    backend:R -- L:fromBackend
+    fromBackend:R --> L:db
+    fromBackend:B --> L:storage
 ```
 
 ## 🛠️ フェーズ2 - API Gateway アーキテクチャ
