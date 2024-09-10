@@ -5,7 +5,6 @@
 architecture-beta
     group api(cloud)[API]
 
-    service client(clarity:mobile-solid)[Client]
     service internet(cloud)[Internet]
     service frontend(server)[Frontend] in api
     service backend(server)[Backend] in api
@@ -14,7 +13,6 @@ architecture-beta
     
     junction fromBackend
 
-    client:R --> L:internet
     internet:R --> L:frontend
     frontend:R --> L:backend
     backend:R -- L:fromBackend
