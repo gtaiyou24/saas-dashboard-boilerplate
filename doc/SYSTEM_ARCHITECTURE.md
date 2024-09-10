@@ -82,7 +82,7 @@ architecture-beta
     alb:R --> L:frontend
     frontend:R --> L:backend
 
-    backend:R -- L:db
+    backend:R --> L:db
     backend:T --> R:storage
 ```
 
