@@ -21,8 +21,6 @@ async def lifespan(app: FastAPI):
 
 
 # TODO
-# 1. 404や500エラーのレスポンスモデルを全 Router に強制させる
-#    https://fastapi.tiangolo.com/advanced/additional-responses/#combine-predefined-responses-and-custom-ones
 # 2. 全リクエストで Sentry / New Relic へのロギングを行う
 # 3. 認可処理を全ルートに強制させる
 # 4. DI処理を各モジュールで行えるようにする
@@ -43,7 +41,13 @@ app = FastAPI(
         422: {"model": ErrorJson, "description": "Unprocessable Entity"}
     }
 )
-app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_credentials=True, allow_methods=["*"], allow_headers=["*"])
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"]
+)
 app.include_router(APIGatewayResource().router)
 
 
