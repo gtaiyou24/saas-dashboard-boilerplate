@@ -109,9 +109,9 @@ pytest -v ./backend/test
  - ✍️ 設計手法: [DDD(ドメイン駆動設計)](https://amzn.to/4gjk6AQ)
  - 🧰 ライブラリ:
    - 🗄 [SQLAlchemy](https://www.sqlalchemy.org/) : Python SQL DataBase interactions (ORM).
-   - ✅ [PyTest](https://docs.pytest.org/en/stable/) : for python test.
-   - 🖊️ [slf4py](https://pypi.org/project/slf4py/) : for logging.
-   - 🔀 [di4injector](https://pypi.org/project/di4injector/) : for DI injection.
+   - ✅ [PyTest](https://docs.pytest.org/en/stable/) : Python test.
+   - 🖊️ [slf4py](https://pypi.org/project/slf4py/) : Logging.
+   - 🔀 [di4injector](https://pypi.org/project/di4injector/) : DI injection.
  - 🗄️ DB: MySQL / Redis
  - 🔌 クライアント連携: GraphQL
  - 🚀 CI: [GitHub Actions](https://docs.github.com/ja/actions)
