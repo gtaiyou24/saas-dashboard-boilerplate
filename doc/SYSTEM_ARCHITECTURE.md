@@ -15,7 +15,7 @@ architecture-beta
 
     backend:R -- L:jct1
     jct1:R --> L:db
-    jct1:B --> T:jct2
+    jct1:B -- T:jct2
     jct2:R --> L:storage
     jct2:B --> L:monitoring
 ```
