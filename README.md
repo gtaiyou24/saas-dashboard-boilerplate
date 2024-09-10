@@ -95,7 +95,7 @@ Appendix
 
 ```bash
 pip install pytest pytest-env httpx
-pytest -v ./test
+pytest -v ./backend/test
 ```
 
 </details>
