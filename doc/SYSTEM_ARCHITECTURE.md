@@ -4,21 +4,26 @@
  - 今後は、BFFを追加する想定
  - マイクロサービス化への転用も可能
 
-## 📝 モジュラモノリス構成
+## 🛠️ Ph.1 - 3層アーキテクチャ
 
 ```mermaid
 architecture-beta
     group api(cloud)[API]
 
-    service db(database)[Database] in api
-    service disk1(disk)[Storage] in api
-    service disk2(disk)[Storage] in api
-    service server(server)[Server] in api
+    service rdb(database)[RDB] in api
+    service kvs(database)[KVS] in api
+    service storage(disk)[Storage] in api
+    service backend(server)[Backend] in api
 
-    db:L -- R:server
-    disk1:T -- B:server
-    disk2:T -- B:db
+    backend:R --> L:rdb
+    backend:R --> L:kvs
+    backend:R --> L:storage
 ```
 
-## 📝️ マイクロサービス構成
+## 🛠️ Ph.2 - API Gateway アーキテクチャ
+
+ - [API ゲートウェイ パターンと、クライアントからマイクロサービスへの直接通信との比較 - .NET | Microsoft Learn](https://learn.microsoft.com/ja-jp/dotnet/architecture/microservices/architect-microservice-container-applications/direct-client-to-microservice-communication-versus-the-api-gateway-pattern)
+
+
+## 🛠️️ Ph.3 - マイクロサービスアーキテクチャ
 WIP
