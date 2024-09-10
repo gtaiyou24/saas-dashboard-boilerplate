@@ -102,7 +102,7 @@ pytest -v ./backend/test
 
 ---
 ## 🛠️ 技術スタック
-### ⚡️ バックエンド
+### 🔨 バックエンド
 
  - ⚙️ 開発言語: Python
  - ⚡️ フレームワーク: [FastAPI](https://fastapi.tiangolo.com/)
@@ -117,7 +117,7 @@ pytest -v ./backend/test
  - 🚀 CI: [GitHub Actions](https://docs.github.com/ja/actions)
  - 📃 Doc: Markdown / [Mermaid](https://mermaid.js.org/)
 
-### 🚀 フロントエンド
+### 🔧 フロントエンド
 
  - ⚙️ 開発言語: TypeScript
  - ⚡️ フレームワーク: [Next.js 14 App Router](https://nextjs.org/docs)
