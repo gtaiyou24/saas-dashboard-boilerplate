@@ -129,7 +129,7 @@ pytest -v ./backend/test
 ### ☁️ インフラ
 
  - ☁️ クラウドサービス: GCP Cloud Run / [Neon](https://neon.tech/) / [Upstash](https://upstash.com/)
- - 🚀 IaC: Terraform
+ - 🌍️ IaC: [Terraform](https://www.terraform.io/)
  - 🐋 DevOps: [Docker Compose](https://www.docker.com)
  - 🚨 エラー/ログ監視ツール: [Sentry](https://sentry.io/welcome/) / [New Relic](https://newrelic.com/jp)
- - ✉️ メールサービス: Gmail
+ - 📧 メールサービス: Gmail / SendGrid
