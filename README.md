@@ -68,7 +68,7 @@ pytest -v ./backend/test
  - 🧰 ライブラリ:
    - 🗄 [SQLAlchemy](https://www.sqlalchemy.org/) : Python SQL DataBase interactions (ORM).
    - ✅ [PyTest](https://docs.pytest.org/en/stable/) : Python test.
-   - 🖊️ [slf4py](https://pypi.org/project/slf4py/) : Logging.
+   - 🔈️ [slf4py](https://pypi.org/project/slf4py/) : Logging.
    - 🔀 [di4injector](https://pypi.org/project/di4injector/) : DI injection.
  - 🗄️ DB: MySQL / Redis
  - 🔌 クライアント連携: GraphQL
