@@ -5,14 +5,14 @@
 architecture-beta
     group api(cloud)[API]
 
-    service rdb(database)[RDB/KVS] in api
+    service db(database)[Database] in api
     service storage(disk)[Storage] in api
     service backend(server)[Backend] in api
     
     junction jct
 
     backend:R -- L:jct
-    jct:R --> L:rdb
+    jct:R --> L:db
     jct:B --> L:storage
 ```
 
