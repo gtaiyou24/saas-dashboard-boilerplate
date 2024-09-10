@@ -24,7 +24,7 @@ jobs:
       - name: Run Unit Test
         run: |
           pip install -r ./backend/requirements.txt
-          pip install -r ./backend/requirements.text.txt
+          pip install -r ./backend/requirements.test.txt
           pytest ./backend/test/unit
   acceptance-test:
     runs-on: ubuntu-latest
@@ -41,5 +41,5 @@ jobs:
       - name: Run Acceptance Test
         run: |
           pip install -r ./backend/requirements.txt
-          pip install -r ./backend/requirements.text.txt
+          pip install -r ./backend/requirements.test.txt
           pytest ./backend/test/acceptance
