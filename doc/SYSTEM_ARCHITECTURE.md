@@ -16,7 +16,7 @@ architecture-beta
     
     junction jct
 
-    backend:R -- L:jct
+    backend:R --> L:jct
     jct:R --> L:db
     jct:B --> L:storage
 ```
