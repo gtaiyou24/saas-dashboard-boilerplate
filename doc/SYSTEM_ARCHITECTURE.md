@@ -14,10 +14,13 @@ architecture-beta
     service kvs(database)[KVS] in api
     service storage(disk)[Storage] in api
     service backend(server)[Backend] in api
+    
+    junction jct
 
-    backend:R --> L:rdb
-    backend:R --> L:kvs
-    backend:R --> L:storage
+    backend:R --> L:jct
+    jct:T --> L:rdb
+    jct:R --> L:kvs
+    jct:B --> L:storage
 ```
 
 ## 🛠️ Ph.2 - API Gateway アーキテクチャ
