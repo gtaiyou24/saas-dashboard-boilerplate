@@ -62,7 +62,30 @@ architecture-beta
 
 **GCP**
 
-WIP
+```mermaid
+architecture-beta
+    group vpc(cloud)[VPC]
+
+    service internet(cloud)[Internet]
+    service alb(internet)[Application Load Balancer]
+    service frontend(server)[Cloud Run - Frontend]
+    service backend(server)[Cloud Run - Backend]
+    service db(database)[Cloud SQL] in vpc
+    service cdn(internet)[Cloud CDN]
+    service storage(disk)[Cloud Storage]
+    
+    junction from_backend
+
+    internet:T --> L:cdn
+    internet:R --> L:alb
+    
+    alb:R --> L:frontend
+    frontend:R --> L:backend
+
+    backend:R -- L:from_backend
+    from_backend:R --> L:db
+    from_backend:B --> L:storage
+```
 
 ## 🛠️ フェーズ2 - API Gateway アーキテクチャ
 モジュラモノリス構成のバックエンドシステムから一部モジュールをマイクロサービス化するフェーズ。 
