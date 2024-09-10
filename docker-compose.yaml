@@ -33,22 +33,22 @@ services:
         condition: service_healthy
 
   # Next.js
-  frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile.local
-    container_name: ${APP_NAME}-frontend
-    volumes:
-      - ./frontend:/app
-    environment:
-      - WATCHPACK_POLLING=true
-    tty: true
-    command: sh -c "npm install && npm run dev"
-    ports:
-      - "3000:3000"
-    depends_on:
-      backend:
-        condition: service_healthy
+#  frontend:
+#    build:
+#      context: ./frontend
+#      dockerfile: Dockerfile.local
+#    container_name: ${APP_NAME}-frontend
+#    volumes:
+#      - ./frontend:/app
+#    environment:
+#      - WATCHPACK_POLLING=true
+#    tty: true
+#    command: sh -c "npm install && npm run dev"
+#    ports:
+#      - "3000:3000"
+#    depends_on:
+#      backend:
+#        condition: service_healthy
 
   # MySQL
   mysql:
@@ -96,6 +96,7 @@ services:
       retries: 3
       start_period: 30s
 
+  # Redis
   redis:
     image: redis:7.4
     platform: linux/x86_64

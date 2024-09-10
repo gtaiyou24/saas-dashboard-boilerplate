@@ -1,4 +1,4 @@
-name: _lint-check
+name: _python-lint-check
 
 on:
   workflow_call:
