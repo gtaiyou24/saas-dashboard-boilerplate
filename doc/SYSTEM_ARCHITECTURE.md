@@ -3,7 +3,7 @@
 
 ```mermaid
 architecture-beta
-    group api(cloud)[API]
+    group api(cloud)[cloud]
 
     service internet(cloud)[Internet]
     service frontend(server)[Frontend] in api
