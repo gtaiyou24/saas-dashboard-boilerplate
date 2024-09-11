@@ -1,3 +1,5 @@
+from typing import override
+
 from fastapi import APIRouter
 
 from common.port.adapter.resource import APIResource
@@ -21,6 +23,7 @@ class HealthResource(APIResource):
             description="リクエスト可能な状態かを確認できます。"
         )
 
+    @override
     @property
     def router(self) -> APIRouter:
         return self.__router

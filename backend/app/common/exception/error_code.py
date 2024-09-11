@@ -28,7 +28,10 @@ class ErrorLevel(Enum):
 
 
 class ErrorCode(Enum):
-    pass
+    COMMON_1000 = ("想定外の原因エラーが発生しました", ErrorLevel.ERROR, HTTPStatus.INTERNAL_SERVER_ERROR)
+    COMMON_2001 = ("アクセス拒否", ErrorLevel.WARN, HTTPStatus.FORBIDDEN)
+    COMMON_2002 = ("不正なリクエストです", ErrorLevel.WARN, HTTPStatus.BAD_REQUEST)
+    COMMON_2003 = ("無効なデータです", ErrorLevel.WARN, HTTPStatus.UNPROCESSABLE_ENTITY)
 
     def __init__(self, message: str, error_level: ErrorLevel, http_status: HTTPStatus):
         self.message = message
