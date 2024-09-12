@@ -34,21 +34,21 @@ class PublishInternalTokenMiddleware(BaseHTTPMiddleware):
         if authorization is None:
             return await call_next(request)
 
-        external_token = authorization.credentials
-        internal_token_id = uuid.uuid4()
-        now = datetime.datetime.now()
-        exp = now + datetime.timedelta(seconds=10)
-        payload = {
-            "iss": "api-gateway",  # JWTの発行者を表す識別子(issuer)。マイクロサービス化した場合は、API Gateway から発行されるため、API Gateway の URLとなる。
-            "sub": "internal-token",  # ユーザーの識別子(subject)。通常ユーザーのIDとなる。
-            "aud": request.url,  # JWTを利用するクライアント識別子で最初にリクエストを受信するモジュール名ないしはマイクロサービス名(audience)。通常 URI 形式で提供される。
-            "iat": int(round(now.timestamp())),  # JWT の発行日時のタイムスタンプ(issued at)
-            "nbf": int(round(now.timestamp())),  # JWT が有効となる日時のタイムスタンプ(not before)
-            "exp": int(round(exp.timestamp())),  # JWT の有効期限のタイムスタンプ(expiration)
-            "jti": internal_token_id,  # JWT の一意な識別子
-            "user_id": str(uuid.uuid4()),
-            "belong_to": [{"id": "テナント1のID", "projects": ["プロジェクト1"]}, {"id": "テナント2のID", "projects": ["プロジェクト2"]}]
-        }
-        request.headers.__dict__["_list"].append((b'x-internal-token', b'yyy'))
+        # external_token = authorization.credentials
+        # internal_token_id = uuid.uuid4()
+        # now = datetime.datetime.now()
+        # exp = now + datetime.timedelta(seconds=10)
+        # payload = {
+        #     "iss": "api-gateway",  # JWTの発行者を表す識別子(issuer)。マイクロサービス化した場合は、API Gateway から発行されるため、API Gateway の URLとなる。
+        #     "sub": "internal-token",  # ユーザーの識別子(subject)。通常ユーザーのIDとなる。
+        #     "aud": request.url,  # JWTを利用するクライアント識別子で最初にリクエストを受信するモジュール名ないしはマイクロサービス名(audience)。通常 URI 形式で提供される。
+        #     "iat": int(round(now.timestamp())),  # JWT の発行日時のタイムスタンプ(issued at)
+        #     "nbf": int(round(now.timestamp())),  # JWT が有効となる日時のタイムスタンプ(not before)
+        #     "exp": int(round(exp.timestamp())),  # JWT の有効期限のタイムスタンプ(expiration)
+        #     "jti": internal_token_id,  # JWT の一意な識別子
+        #     "user_id": str(uuid.uuid4()),
+        #     "belong_to": [{"id": "テナント1のID", "projects": ["プロジェクト1"]}, {"id": "テナント2のID", "projects": ["プロジェクト2"]}]
+        # }
+        # request.headers.__dict__["_list"].append((b'x-internal-token', b'yyy'))
         response = await call_next(request)
         return response

@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from typing import Literal
 
-from fastapi import Depends, Header
+from fastapi import Header
 from fastapi.security import OAuth2PasswordBearer
 
 
@@ -31,4 +31,3 @@ class GetCurrentUser:
 
     def __hash__(self) -> int:
         return hash(",".join(sorted(map(str, list(self.permit)))))
-
