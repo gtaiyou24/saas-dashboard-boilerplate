@@ -3,7 +3,6 @@
 <a href="https://coverage-badge.samuelcolvin.workers.dev/redirect/gtaiyou24/saas-dashboard" target="_blank"><img src="https://coverage-badge.samuelcolvin.workers.dev/gtaiyou24/saas-dashboard.svg" alt="Coverage"></a>
 
 ## 🔥 ダウンロード
-[Copier](https://copier.readthedocs.io/en/stable/) をインストールし、SaaS Dashboard テンプレートリポジトリをダウンロードしてください。
 ```bash
 pip install copier
 copier copy https://github.com/gtaiyou24/saas-dashboard my-project --trust
