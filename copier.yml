@@ -1,0 +1,4 @@
+project_name:
+    type: str
+    help: 本アプリの名前を小文字のハイフン(-)繋ぎで指定してください。
+    default: "saas-dashboard"
