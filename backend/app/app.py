@@ -9,7 +9,6 @@ from fastapi.encoders import jsonable_encoder
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.middleware.trustedhost import TrustedHostMiddleware
 from sqlalchemy import create_engine, Engine
 from pydantic import BaseModel
 from slf4py import create_logger
@@ -76,7 +75,7 @@ app.add_middleware(
     allow_headers=["*"]
 )
 # app.add_middleware(HTTPSRedirectMiddleware)  # HTTPS を強制
-app.add_middleware(TrustedHostMiddleware, allowed_hosts=["localhost", "example.com", "*.example.com"])  # ホストヘッダーを指定
+# app.add_middleware(TrustedHostMiddleware, allowed_hosts=["localhost", "example.com", "*.example.com"])  # ホストヘッダーを指定
 app.add_middleware(MonitoringMiddleware)  # エラー/ログ監視のためのモニタリングを実行
 app.add_middleware(PublishInternalTokenMiddleware)  # 内部通信用トークンを発行
 
