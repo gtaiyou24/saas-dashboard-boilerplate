@@ -9,6 +9,7 @@ from fastapi.encoders import jsonable_encoder
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.middleware.trustedhost import TrustedHostMiddleware
 from sqlalchemy import create_engine, Engine
 from pydantic import BaseModel
 from slf4py import create_logger
@@ -17,7 +18,7 @@ from apigateway.core import ApiGateway
 from authority.core import Authority
 from common.exception import SystemException, ErrorCode
 from common.port.adapter.persistence.repository.mysql import DataBase
-from middleware import MonitoringMiddleware
+from middleware import MonitoringMiddleware, PublishInternalTokenMiddleware
 
 api_gateway = ApiGateway()
 authority = Authority()
@@ -45,10 +46,6 @@ class ErrorJson(BaseModel):
     status: HTTPStatus
     instance: str
 
-
-# TODO
-# - 内部通信用トークンを全ルートに強制させる -> Middleware で 内部通信用トークンに変換し、各モジュールの Resource に渡す
-# - 権限によってエンドポイントを呼び出せるのかを定義する
 
 app = FastAPI(
     title="Backend API",
@@ -78,7 +75,11 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"]
 )
-app.add_middleware(MonitoringMiddleware)
+# app.add_middleware(HTTPSRedirectMiddleware)  # HTTPS を強制
+app.add_middleware(TrustedHostMiddleware, allowed_hosts=["localhost", "example.com", "*.example.com"])  # ホストヘッダーを指定
+app.add_middleware(MonitoringMiddleware)  # エラー/ログ監視のためのモニタリングを実行
+app.add_middleware(PublishInternalTokenMiddleware)  # 内部通信用トークンを発行
+
 app.include_router(api_gateway.router)
 app.include_router(authority.router)
 

@@ -15,14 +15,12 @@ API Gateway 上では HTTP リクエストの認証アクセストークンの�
 内部通信用トークンは、JWT(JSON Web Token)です。JWT とは、JSON を署名付きで暗号化した文字列のことです。
 JSON には認証ユーザー ID や内部通信用トークン ID, パーミッション情報など各マイクロサービスで利用する情報が含まれています。
 
-![](https://qiita-user-contents.imgix.net/https%3A%2F%2Fqiita-image-store.s3.ap-northeast-1.amazonaws.com%2F0%2F3137271%2F895c3bfd-90cb-c0f5-7642-04066530a24a.jpeg?ixlib=rb-4.0.0&auto=format&gif-q=60&q=75&w=1400&fit=max&s=d4d5a97bc77303d24f8d1b79c4185c44)
-
 ```python
 # pip install pyjwt
 import jwt
 
 payload = {
-    "iss": "api_gateway",
+    "iss": "https://apigateway.example.com",
     "sub": "internal_token",
     # ...
 }
