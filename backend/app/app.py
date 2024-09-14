@@ -1,7 +1,5 @@
 import os
 from contextlib import asynccontextmanager
-from http import HTTPStatus
-from typing import Literal
 
 from di import DIContainer, DI
 from fastapi import FastAPI, Request
@@ -10,15 +8,18 @@ from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy import create_engine, Engine
-from pydantic import BaseModel
 from slf4py import create_logger
 
 from apigateway.core import ApiGateway
 from authority.core import Authority
+from common.core import Common
 from common.exception import SystemException, ErrorCode
 from common.port.adapter.persistence.repository.mysql import DataBase
+from common.port.adapter.resource.error import ErrorJson
 from middleware import MonitoringMiddleware, PublishInternalTokenMiddleware
 
+
+common = Common()
 api_gateway = ApiGateway()
 authority = Authority()
 
@@ -32,18 +33,13 @@ async def lifespan(app: FastAPI):
         DIContainer.instance().register(DI.of(Engine, {}, engine))
         DataBase.metadata.create_all(bind=engine)
 
+    common.startup()
     api_gateway.startup()
     authority.startup()
     yield
+    common.shutdown()
     api_gateway.shutdown()
     authority.shutdown()
-
-
-class ErrorJson(BaseModel):
-    type: Literal[*[e.name for e in ErrorCode]]
-    title: str
-    status: HTTPStatus
-    instance: str
 
 
 app = FastAPI(
