@@ -1,5 +1,6 @@
 import os
 from contextlib import asynccontextmanager
+from http import HTTPStatus
 
 from di import DIContainer, DI
 from fastapi import FastAPI, Request
@@ -13,7 +14,7 @@ from slf4py import create_logger
 from apigateway.core import ApiGateway
 from authority.core import Authority
 from common.core import Common
-from common.exception import SystemException, ErrorCode
+from common.exception import SystemException, ErrorLevel, ErrorCode
 from common.port.adapter.persistence.repository.mysql import DataBase
 from common.port.adapter.resource.error import ErrorJson
 from middleware import MonitoringMiddleware, PublishInternalTokenMiddleware

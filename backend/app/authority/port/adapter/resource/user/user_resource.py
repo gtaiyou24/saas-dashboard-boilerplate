@@ -16,13 +16,7 @@ class UserResource(APIResource):
         self.__identity_application_service = None
         self.router.add_api_route("/register", self.register, methods=["POST"], name="ユーザー登録")
         self.router.add_api_route("/unregister", self.unregister, methods=["DELETE"], name="ユーザー削除")
-        # self.router.add_api_route(
-        #     "/verify-email/{token}",
-        #     self.verify_email,
-        #     methods=["POST"],
-        #     response_model=None,
-        #     name='メールアドレス検証'
-        # )
+        self.router.add_api_route("/verify-email/{token}", self.verify_email, methods=["POST"], name='メアド認証')
         # self.router.add_api_route("/forgot-password", self.forgot_password, methods=["POST"], name='パスワードリセット')
         # self.router.add_api_route("/reset-password", self.reset_password, methods=["POST"], name='パスワード再設定')
         # self.router.add_api_route("/change-password", self.change_password, methods=["POST"], name="パスワード更新")
@@ -47,7 +41,7 @@ class UserResource(APIResource):
         pass
 
     def verify_email(self, token: str) -> None:
-        """メールアドレス検証"""
+        """メールアドレス認証"""
         self.identity_application_service.verify_email(token)
 
     def forgot_password(self, request: ForgotPasswordRequest) -> None:

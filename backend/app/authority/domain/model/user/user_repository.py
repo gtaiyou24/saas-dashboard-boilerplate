@@ -25,6 +25,10 @@ class UserRepository(abc.ABC):
         pass
 
     @abc.abstractmethod
+    def user_with_token(self, value: str) -> User | None:
+        pass
+
+    @abc.abstractmethod
     def users_with_ids(self, *user_id: UserId) -> set[User]:
         pass
 

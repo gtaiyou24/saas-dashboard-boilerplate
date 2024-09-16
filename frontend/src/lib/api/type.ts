@@ -4,41 +4,27 @@
  */
 
 export interface paths {
-    "/analytics/chat": {
+    "/health/check": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        get?: never;
+        /**
+         * ヘルスチェック
+         * @description リクエスト可能な状態かを確認できます。
+         */
+        get: operations["\u30D8\u30EB\u30B9\u30C1\u30A7\u30C3\u30AF_health_check_get"];
         put?: never;
-        /** チャット */
-        post: operations["\u30C1\u30E3\u30C3\u30C8_analytics_chat_post"];
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    "/analytics/dataset": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** データセット取得 */
-        post: operations["\u30C7\u30FC\u30BF\u30BB\u30C3\u30C8\u53D6\u5F97_analytics_dataset_post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/auth/register": {
+    "/users/register": {
         parameters: {
             query?: never;
             header?: never;
@@ -51,14 +37,14 @@ export interface paths {
          * ユーザー登録
          * @description ユーザー登録
          */
-        post: operations["\u30E6\u30FC\u30B6\u30FC\u767B\u9332_auth_register_post"];
+        post: operations["\u30E6\u30FC\u30B6\u30FC\u767B\u9332_users_register_post"];
         delete?: never;
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    "/auth/unregister": {
+    "/users/unregister": {
         parameters: {
             query?: never;
             header?: never;
@@ -72,13 +58,13 @@ export interface paths {
          * ユーザー削除
          * @description ユーザー削除
          */
-        delete: operations["\u30E6\u30FC\u30B6\u30FC\u524A\u9664_auth_unregister_delete"];
+        delete: operations["\u30E6\u30FC\u30B6\u30FC\u524A\u9664_users_unregister_delete"];
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    "/auth/verify-email/{token}": {
+    "/users/verify-email/{token}": {
         parameters: {
             query?: never;
             header?: never;
@@ -88,228 +74,10 @@ export interface paths {
         get?: never;
         put?: never;
         /**
-         * メールアドレス検証
-         * @description メールアドレス検証
+         * メアド認証
+         * @description メールアドレス認証
          */
-        post: operations["\u30E1\u30FC\u30EB\u30A2\u30C9\u30EC\u30B9\u691C\u8A3C_auth_verify_email__token__post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/auth/token": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        /**
-         * トークンを更新
-         * @description トークンをリフレッシュ
-         */
-        put: operations["\u30C8\u30FC\u30AF\u30F3\u3092\u66F4\u65B0_auth_token_put"];
-        /**
-         * トークンを発行
-         * @description トークンを発行
-         */
-        post: operations["\u30C8\u30FC\u30AF\u30F3\u3092\u767A\u884C_auth_token_post"];
-        /**
-         * トークンを削除
-         * @description トークンを削除
-         */
-        delete: operations["\u30C8\u30FC\u30AF\u30F3\u3092\u524A\u9664_auth_token_delete"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/auth/forgot-password": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** パスワードリセット */
-        post: operations["\u30D1\u30B9\u30EF\u30FC\u30C9\u30EA\u30BB\u30C3\u30C8_auth_forgot_password_post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/auth/reset-password": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** パスワード再設定 */
-        post: operations["\u30D1\u30B9\u30EF\u30FC\u30C9\u518D\u8A2D\u5B9A_auth_reset_password_post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/auth/change-password": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** パスワード更新 */
-        post: operations["\u30D1\u30B9\u30EF\u30FC\u30C9\u66F4\u65B0_auth_change_password_post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/health/check": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Check */
-        get: operations["check_health_check_get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/tenants/": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Tenants */
-        get: operations["tenants_tenants__get"];
-        put?: never;
-        /** Create New Tenant */
-        post: operations["create_new_tenant_tenants__post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/tenants/{tenant_id}/projects": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Projects */
-        get: operations["projects_tenants__tenant_id__projects_get"];
-        put?: never;
-        /** Create New Project */
-        post: operations["create_new_project_tenants__tenant_id__projects_post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/tenants/{tenant_id}/members": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Members */
-        get: operations["members_tenants__tenant_id__members_get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/tenants/{tenant_id}/members/invite": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Invite */
-        post: operations["invite_tenants__tenant_id__members_invite_post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/tenants/{tenant_id}/members/join": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Join */
-        post: operations["join_tenants__tenant_id__members_join_post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/tenants/{tenant_id}/members/{member_id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        /** Change */
-        put: operations["change_tenants__tenant_id__members__member_id__put"];
-        post?: never;
-        /** Remove */
-        delete: operations["remove_tenants__tenant_id__members__member_id__delete"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/users/me": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Me */
-        get: operations["me_users_me_get"];
-        put?: never;
-        post?: never;
+        post: operations["\u30E1\u30A2\u30C9\u8A8D\u8A3C_users_verify_email__token__post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -320,58 +88,18 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
-        /** Account */
-        Account: {
-            /** プロバイダー名 */
-            provider: string;
-            /** プロバイダーアカウントID */
-            provider_account_id: string;
-        };
-        /** ChangeRoleRequest */
-        ChangeRoleRequest: {
-            /** メンバーID */
-            member_id: string;
-            /** 新しいロール */
-            new_role: components["schemas"]["Role"];
-        };
-        /** ChatRequest */
-        ChatRequest: {
-            /** メッセージ一覧 */
-            messages: components["schemas"]["Message-Input"][];
-        };
-        /** ChatResponse */
-        ChatResponse: {
-            /** メッセージ一覧 */
-            messages: components["schemas"]["Message-Output"][];
-        };
-        /** DataField */
-        DataField: {
-            /** フィールド名 */
-            name: string;
-        };
-        /** DataSetResponse */
-        DataSetResponse: {
-            /** フィールド一覧 */
-            fields: components["schemas"]["DataField"][];
-            /** データソース */
-            data_source: Record<string, never>[];
-            /** クエリー */
-            query: string;
-        };
         /** ErrorJson */
         ErrorJson: {
-            /** Type */
-            type: string;
+            /**
+             * Type
+             * @enum {string}
+             */
+            type: "COMMON_1000" | "COMMON_2001" | "COMMON_2002" | "COMMON_2003" | "VALID_TOKEN_DOES_NOT_EXISTS" | "USER_DOES_NOT_FOUND" | "USER_IS_NOT_VERIFIED";
             /** Title */
             title: string;
             status: components["schemas"]["HTTPStatus"];
             /** Instance */
             instance: string;
-        };
-        /** ForgotPasswordRequest */
-        ForgotPasswordRequest: {
-            /** メールアドレス */
-            email_address: string;
         };
         /**
          * HTTPStatus
@@ -395,79 +123,6 @@ export interface components {
          * @enum {integer}
          */
         HTTPStatus: 100 | 101 | 102 | 103 | 200 | 201 | 202 | 203 | 204 | 205 | 206 | 207 | 208 | 226 | 300 | 301 | 302 | 303 | 304 | 305 | 307 | 308 | 400 | 401 | 402 | 403 | 404 | 405 | 406 | 407 | 408 | 409 | 410 | 411 | 412 | 413 | 414 | 415 | 416 | 417 | 418 | 421 | 422 | 423 | 424 | 425 | 426 | 428 | 429 | 431 | 451 | 500 | 501 | 502 | 503 | 504 | 505 | 506 | 507 | 508 | 510 | 511;
-        /** HTTPValidationError */
-        HTTPValidationError: {
-            /** Detail */
-            detail?: components["schemas"]["ValidationError"][];
-        };
-        /** InviteMemberRequest */
-        InviteMemberRequest: {
-            /** メールアドレス */
-            email_address: string;
-            /** ロール */
-            role: components["schemas"]["Role"];
-        };
-        /** MemberJson */
-        MemberJson: {
-            /** ユーザーID */
-            user_id: string;
-            /** ユーザー名 */
-            username: string;
-            /** メールアドレス */
-            email_address: string;
-            /**
-             * ロール
-             * @enum {string}
-             */
-            role: "ADMIN" | "EDITOR" | "READER";
-        };
-        /** MemberListJson */
-        MemberListJson: {
-            /** メンバー一覧 */
-            members: components["schemas"]["MemberJson"][];
-        };
-        /** Message */
-        "Message-Input": {
-            /**
-             * ロール
-             * @default user
-             * @enum {string}
-             */
-            role: "user" | "system" | "assistant";
-            /** コンテンツ */
-            content: string;
-        };
-        /** Message */
-        "Message-Output": {
-            /**
-             * ロール
-             * @enum {string}
-             */
-            role: "user" | "system" | "assistant";
-            /** コンテンツ */
-            content: string;
-        };
-        /** OAuth2PasswordRequest */
-        OAuth2PasswordRequest: {
-            /** メールアドレス */
-            email_address: string;
-            /** パスワード */
-            password: string;
-        };
-        /** ProjectJson */
-        ProjectJson: {
-            /** プロジェクトID */
-            id: string;
-            /** テナントID */
-            tenant_id: string;
-            /** プロジェクト名 */
-            name: string;
-        };
-        /** ProjectListJson */
-        ProjectListJson: {
-            /** Projects */
-            projects: components["schemas"]["ProjectJson"][];
-        };
         /** RegisterTenantRequest */
         RegisterTenantRequest: {
             /** ユーザー名 */
@@ -476,79 +131,6 @@ export interface components {
             email_address: string;
             /** パスワード */
             password: string;
-        };
-        /** ResetPasswordRequest */
-        ResetPasswordRequest: {
-            /** パスワードリセットトークン */
-            token: string;
-            /** パスワード */
-            password: string;
-        };
-        /**
-         * Role
-         * @enum {string}
-         */
-        Role: "admin" | "editor" | "reader";
-        /** Tenant */
-        Tenant: {
-            /** テナントID */
-            id: string;
-            /** テナント名 */
-            name: string;
-        };
-        /** TenantJson */
-        TenantJson: {
-            /** テナントID */
-            id: string;
-            /** テナント名 */
-            name: string;
-        };
-        /** TenantListJson */
-        TenantListJson: {
-            /** Tenants */
-            tenants: components["schemas"]["TenantJson"][];
-        };
-        /** TokenJson */
-        TokenJson: {
-            /** アクセストークン */
-            access_token: string;
-            /** リフレッシュトークン */
-            refresh_token: string;
-            /**
-             * トークンタイプ
-             * @default bearer
-             */
-            token_type: string;
-            /** アクセストークンの有効期間タイムスタンプ */
-            expires_at: number;
-        };
-        /** UserJson */
-        UserJson: {
-            /** id */
-            id: string;
-            /** ユーザー名 */
-            username: string;
-            /** メールアドレス */
-            email_address: string;
-            /**
-             * 所属テナント一覧
-             * @default []
-             */
-            tenants: components["schemas"]["Tenant"][];
-            /**
-             * 連携アカウント一覧
-             * @default []
-             */
-            accounts: components["schemas"]["Account"][];
-        };
-        /** ValidationError */
-        ValidationError: {
-            /** Location */
-            loc: (string | number)[];
-            /** Message */
-            msg: string;
-            /** Error Type */
-            type: string;
         };
     };
     responses: never;
@@ -559,18 +141,14 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
-    "\u30C1\u30E3\u30C3\u30C8_analytics_chat_post": {
+    "\u30D8\u30EB\u30B9\u30C1\u30A7\u30C3\u30AF_health_check_get": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["ChatRequest"];
-            };
-        };
+        requestBody?: never;
         responses: {
             /** @description Successful Response */
             200: {
@@ -578,54 +156,21 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["ChatResponse"];
+                    "application/json": Record<string, never>;
                 };
             };
-            /** @description Validation Error */
+            /** @description Unprocessable Entity */
             422: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
+                    "application/json": components["schemas"]["ErrorJson"];
                 };
             };
         };
     };
-    "\u30C7\u30FC\u30BF\u30BB\u30C3\u30C8\u53D6\u5F97_analytics_dataset_post": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["ChatRequest"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["DataSetResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    "\u30E6\u30FC\u30B6\u30FC\u767B\u9332_auth_register_post": {
+    "\u30E6\u30FC\u30B6\u30FC\u767B\u9332_users_register_post": {
         parameters: {
             query?: never;
             header?: never;
@@ -647,18 +192,18 @@ export interface operations {
                     "application/json": unknown;
                 };
             };
-            /** @description Validation Error */
+            /** @description Unprocessable Entity */
             422: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
+                    "application/json": components["schemas"]["ErrorJson"];
                 };
             };
         };
     };
-    "\u30E6\u30FC\u30B6\u30FC\u524A\u9664_auth_unregister_delete": {
+    "\u30E6\u30FC\u30B6\u30FC\u524A\u9664_users_unregister_delete": {
         parameters: {
             query?: never;
             header?: never;
@@ -676,9 +221,18 @@ export interface operations {
                     "application/json": unknown;
                 };
             };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorJson"];
+                };
+            };
         };
     };
-    "\u30E1\u30FC\u30EB\u30A2\u30C9\u30EC\u30B9\u691C\u8A3C_auth_verify_email__token__post": {
+    "\u30E1\u30A2\u30C9\u8A8D\u8A3C_users_verify_email__token__post": {
         parameters: {
             query?: never;
             header?: never;
@@ -698,497 +252,13 @@ export interface operations {
                     "application/json": unknown;
                 };
             };
-            /** @description Validation Error */
+            /** @description Unprocessable Entity */
             422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    "\u30C8\u30FC\u30AF\u30F3\u3092\u66F4\u65B0_auth_token_put": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["TokenJson"];
-                };
-            };
-        };
-    };
-    "\u30C8\u30FC\u30AF\u30F3\u3092\u767A\u884C_auth_token_post": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["OAuth2PasswordRequest"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["TokenJson"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
                     "application/json": components["schemas"]["ErrorJson"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorJson"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    "\u30C8\u30FC\u30AF\u30F3\u3092\u524A\u9664_auth_token_delete": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": unknown;
-                };
-            };
-        };
-    };
-    "\u30D1\u30B9\u30EF\u30FC\u30C9\u30EA\u30BB\u30C3\u30C8_auth_forgot_password_post": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["ForgotPasswordRequest"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": unknown;
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    "\u30D1\u30B9\u30EF\u30FC\u30C9\u518D\u8A2D\u5B9A_auth_reset_password_post": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["ResetPasswordRequest"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": unknown;
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    "\u30D1\u30B9\u30EF\u30FC\u30C9\u66F4\u65B0_auth_change_password_post": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": unknown;
-                };
-            };
-        };
-    };
-    check_health_check_get: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": Record<string, never>;
-                };
-            };
-        };
-    };
-    tenants_tenants__get: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["TenantListJson"];
-                };
-            };
-        };
-    };
-    create_new_tenant_tenants__post: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["TenantJson"];
-                };
-            };
-        };
-    };
-    projects_tenants__tenant_id__projects_get: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                tenant_id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ProjectListJson"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    create_new_project_tenants__tenant_id__projects_post: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                tenant_id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ProjectJson"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    members_tenants__tenant_id__members_get: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                tenant_id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["MemberListJson"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    invite_tenants__tenant_id__members_invite_post: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                tenant_id: string;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["InviteMemberRequest"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": unknown;
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    join_tenants__tenant_id__members_join_post: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                tenant_id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": unknown;
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    change_tenants__tenant_id__members__member_id__put: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                tenant_id: string;
-                member_id: string;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["ChangeRoleRequest"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["MemberJson"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    remove_tenants__tenant_id__members__member_id__delete: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                tenant_id: string;
-                member_id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["MemberListJson"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    me_users_me_get: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["UserJson"];
                 };
             };
         };

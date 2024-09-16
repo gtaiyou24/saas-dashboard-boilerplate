@@ -1,14 +1,16 @@
 from injector import singleton, inject
 
-from authority.application.identity.command import RegisterUserCommand
-from authority.application.identity.dpo import TenantDpo
-from authority.application.identity.subscriber import UserProvisionedSubscriber
+from authority.application.identity.command import RegisterUserCommand, ForgotPasswordCommand, ResetPasswordCommand, \
+    AuthenticateCommand
+from authority.application.identity.dpo import TenantDpo, UserDpo
+from authority.application.identity.subscriber import VerificationTokenGeneratedSubscriber, PasswordForgotSubscriber
 from authority.domain.model.mail import SendMailService, EmailAddress
 from authority.domain.model.tenant import TenantRepository, Tenant
 from authority.domain.model.tenant.project import ProjectRepository
-from authority.domain.model.user import UserRepository, User
+from authority.domain.model.user import UserRepository, User, Token
 from common.application import transactional
 from common.domain.model import DomainEventPublisher
+from common.exception import SystemException, ErrorCode
 
 
 @singleton
@@ -36,7 +38,7 @@ class IdentityApplicationService:
                        テナント登録時は、’No Project’というプロジェクトを登録し、ユーザーはそのプロジェクト以下で操作する。
         """
         # サブスクライバを登録
-        DomainEventPublisher.instance().subscribe(UserProvisionedSubscriber())
+        DomainEventPublisher.instance().subscribe(VerificationTokenGeneratedSubscriber())
 
         # テナントを作成
         tenant_id = self.tenant_repository.next_identity()
@@ -57,3 +59,65 @@ class IdentityApplicationService:
         self.tenant_repository.add(tenant)
         self.project_repository.add(project)
         return TenantDpo(tenant)
+
+    @transactional
+    def verify_email(self, verification_token: str) -> None:
+        """メアド検証トークン指定でユーザーを有効化し、セッションを発行する"""
+        user = self.user_repository.user_with_token(verification_token)
+        if user is None or user.token_with(verification_token).has_expired():
+            raise SystemException(ErrorCode.VALID_TOKEN_DOES_NOT_EXISTS, f"{verification_token}は無効なトークンです。")
+
+        user.verified()
+        self.user_repository.add(user)
+
+    @transactional
+    def forgot_password(self, command: ForgotPasswordCommand) -> None:
+        # サブスクライバを登録
+        DomainEventPublisher.instance().subscribe(PasswordForgotSubscriber())
+
+        email_address = EmailAddress(command.email_address)
+        user = self.user_repository.user_with_email_address(email_address)
+        if user is None:
+            raise SystemException(
+                ErrorCode.USER_DOES_NOT_FOUND,
+                f"{email_address.text} に紐づくユーザーが見つからなかったため、パスワードリセットメールを送信できませんでした。",
+            )
+
+        user.generate(Token.Type.PASSWORD_RESET)
+        self.user_repository.add(user)
+
+    @transactional
+    def reset_password(self, command: ResetPasswordCommand) -> None:
+        """新しく設定したパスワードとパスワードリセットトークン指定で新しいパスワードに変更する"""
+        user = self.user_repository.user_with_token(command.reset_token)
+        if user is None or user.token_with(command.reset_token).has_expired():
+            raise SystemException(
+                ErrorCode.VALID_TOKEN_DOES_NOT_EXISTS,
+                f"指定したトークン {command.reset_token} は無効なのでパスワードをリセットできません。",
+            )
+
+        user.reset_password(command.password, command.reset_token)
+        self.user_repository.add(user)
+
+    @transactional
+    def authenticate(self, command: AuthenticateCommand) -> UserDpo:
+        """ユーザー認証し、セッションを発行する"""
+        email_address = EmailAddress(command.email_address)
+        user = self.user_repository.user_with_email_address(email_address)
+
+        # 該当ユーザーが存在するか、パスワードは一致しているか
+        if user is None or not user.verify_password(command.password):
+            raise SystemException(ErrorCode.USER_DOES_NOT_FOUND,
+                                  f"メールアドレス {email_address.text} のユーザーが見つかりませんでした。")
+
+        # メールアドレス検証が終わっていない場合は、確認メールを再送信する
+        if not user.is_verified():
+            # 認証メール送信のためにサブスクライバを登録
+            DomainEventPublisher.instance().subscribe(VerificationTokenGeneratedSubscriber())
+
+            user.generate(Token.Type.VERIFICATION)
+            self.user_repository.add(user)
+            raise SystemException(ErrorCode.USER_IS_NOT_VERIFIED,
+                                  "メールアドレスの認証が完了していません。認証メールを送信しました。")
+
+        return UserDpo(user, [], [])

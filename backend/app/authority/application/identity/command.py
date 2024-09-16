@@ -20,19 +20,9 @@ class RegisterUserCommand:
 
 
 @dataclass(init=True, unsafe_hash=True, frozen=True)
-class AuthenticateUserCommand:
+class AuthenticateCommand:
     email_address: str
     password: str | None
-
-
-@dataclass(init=True, unsafe_hash=True, frozen=True)
-class RefreshCommand:
-    refresh_token: str
-
-
-@dataclass(init=True, unsafe_hash=True, frozen=True)
-class RevokeCommand:
-    token: str
 
 
 @dataclass(init=True, unsafe_hash=True, frozen=True)

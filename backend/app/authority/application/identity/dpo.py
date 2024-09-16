@@ -2,6 +2,7 @@ from dataclasses import dataclass
 
 from apigateway.domain.model.session import Session
 from authority.domain.model.tenant import Tenant
+from authority.domain.model.tenant.project import Project
 from authority.domain.model.user import User
 
 
@@ -19,6 +20,7 @@ class SessionDpo:
 class UserDpo:
     user: User
     tenants: list[Tenant]
+    projects: list[Project]
 
     def has_tenant(self, tenant_id: str) -> bool:
         for e in self.tenants:

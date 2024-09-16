@@ -5,7 +5,7 @@ from authority.domain.model.user import VerificationTokenGenerated, UserReposito
 from common.domain.model import DomainEventSubscriber, DomainRegistry
 
 
-class UserProvisionedSubscriber(DomainEventSubscriber[VerificationTokenGenerated]):
+class VerificationTokenGeneratedSubscriber(DomainEventSubscriber[VerificationTokenGenerated]):
     """ユーザー作成イベントを購読するサブスクライバ"""
     def __init__(self):
         self.send_mail_service = DomainRegistry.resolve(SendMailService)

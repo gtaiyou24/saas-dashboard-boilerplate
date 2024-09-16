@@ -44,7 +44,7 @@ class TokensTableRow(DataBase):
         return [TokensTableRow(user_id=user.id.value,
                                type=TokenTypeField[token.type.name],
                                value=token.value,
-                               expires_at=token.expires_at) for token in user.tokens]
+                               expires_at=token.expires_at) for token in user.tokens if not token.has_expired()]
 
     def to_value(self) -> Token:
         return Token(Token.Type[self.type.name], self.value, self.expires_at)

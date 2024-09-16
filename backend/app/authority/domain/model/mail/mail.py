@@ -38,13 +38,15 @@ class VerificationMail(Mail):
     <h1 style="color: white; margin: 0;">メールアドレス認証</h1>
   </div>
   <div style="background-color: #f9f9f9; padding: 20px; border-radius: 0 0 5px 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
-    <p>この度はご登録ありがとうございました！下記の認証コードを入力し、登録を完了させてください。</p>
+    <p>この度はご登録ありがとうございました！下記の認証ボタンをクリックし、登録を完了させてください。</p>
     <div style="text-align: center; margin: 30px 0;">
-      <span style="font-size: 32px; font-weight: bold; letter-spacing: 5px; color: #4CAF50;">{verification_token.value}</span>
+      <span style="font-size: 32px; font-weight: bold; letter-spacing: 5px; color: #4CAF50;">
+        <a href="{os.getenv('FRONTEND_URL')}/auth/new-verification?token={verification_token.value}" style="background-color: #4CAF50; color: white; padding: 12px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;">メールアドレスを認証</a>
+      </span>
     </div>
-    <p>10分以内に認証を完了されない場合は、上記コードは無効になります。</p>
+    <p>10分以内に認証を完了されない場合は、上記のボタンは無効になります。</p>
     <p>もしアカウントを作成していない場合は、本メールを無視してください。</p>
-    <p>よろしくお願い致します。<br>アプリサポートチーム</p>
+    <p>よろしくお願い致します。<br>サポートチーム</p>
   </div>
   <div style="text-align: center; margin-top: 20px; color: #888; font-size: 0.8em;">
     <p>これは自動メッセージですので、返信しないでください。</p>

@@ -39,6 +39,13 @@ class InMemUserRepository(UserRepository):
         return user_list
 
     @override
+    def user_with_token(self, value: str) -> User | None:
+        for user in self.users:
+            if user.token_with(value):
+                return user
+        return None
+
+    @override
     def user_with_email_address(self, email_address: EmailAddress) -> User | None:
         for user in self.users:
             if user.email_address == email_address:

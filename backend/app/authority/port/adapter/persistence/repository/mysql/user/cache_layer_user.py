@@ -20,7 +20,7 @@ class CacheLayerUser:
     def __init__(self, driver_manager_user: DriverManagerUser):
         self.__driver_manager_user = driver_manager_user
 
-    def user_or_origin(self, user_id: UserId) -> User | None:
+    def cache_or_origin(self, user_id: UserId) -> User | None:
         key = f'id-{user_id.value}'
         if key in self.values.keys():
             return self.values[key]
@@ -29,10 +29,10 @@ class CacheLayerUser:
         self.values[key] = optional
         return self.values[key]
 
-    def users_or_origins(self, *user_id: UserId) -> set[User] | None:
+    def caches_or_origins(self, *user_id: UserId) -> set[User] | None:
         return self.__driver_manager_user.find_by_ids(*user_id)
 
-    def user_or_origin_with_email_address(self, email_address: EmailAddress) -> User | None:
+    def cache_or_origin_with_email_address(self, email_address: EmailAddress) -> User | None:
         key = f'email_address-{email_address.text}'
         if key in self.values.keys():
             return self.values[key]
@@ -41,10 +41,10 @@ class CacheLayerUser:
         self.values[key] = optional
         return self.values[key]
 
-    def user_or_origin_with_account(self, provider: Account.Provider, provider_account_id: str) -> User | None:
+    def cache_or_origin_with_account(self, provider: Account.Provider, provider_account_id: str) -> User | None:
         return self.__driver_manager_user.find_by_account(provider, provider_account_id)
 
-    def user_or_origin_with_token(self, token: str) -> User | None:
+    def cache_or_origin_with_token(self, token: str) -> User | None:
         return self.__driver_manager_user.find_by_token(token)
 
     def set(self, user: User) -> None:

@@ -28,10 +28,19 @@ class ErrorLevel(Enum):
 
 
 class ErrorCode(Enum):
+    # Common
     COMMON_1000 = ("想定外の原因エラーが発生しました", ErrorLevel.ERROR, HTTPStatus.INTERNAL_SERVER_ERROR)
     COMMON_2001 = ("アクセス拒否", ErrorLevel.WARN, HTTPStatus.FORBIDDEN)
     COMMON_2002 = ("不正なリクエストです", ErrorLevel.WARN, HTTPStatus.BAD_REQUEST)
     COMMON_2003 = ("無効なデータです", ErrorLevel.WARN, HTTPStatus.UNPROCESSABLE_ENTITY)
+
+    # API Gateway
+
+    # Authority
+    VALID_TOKEN_DOES_NOT_EXISTS = (
+        "トークンが見つからない、もしくはすでに有効期限を過ぎています", ErrorLevel.ERROR, HTTPStatus.BAD_REQUEST)
+    USER_DOES_NOT_FOUND = ("該当ユーザーが見つかりません。", ErrorLevel.WARN, HTTPStatus.NOT_FOUND)
+    USER_IS_NOT_VERIFIED = ("該当ユーザーの認証が完了していません。", ErrorLevel.WARN, HTTPStatus.FORBIDDEN)
 
     def __init__(self, message: str, error_level: ErrorLevel, http_status: HTTPStatus):
         self.message = message

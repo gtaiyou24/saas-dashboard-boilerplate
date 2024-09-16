@@ -7,8 +7,7 @@ import {TAGS} from "@/lib/constants";
 
 
 export const postRegisterUser = async (username: string, email: string, password: string) =>  {
-    const {error} = await createApiClient().POST("/auth/register", {
-        cache: "no-cache",
+    const {error} = await createApiClient().POST("/users/register", {
         body: {
             username: username,
             email_address: email,
@@ -22,7 +21,7 @@ export const postRegisterUser = async (username: string, email: string, password
 }
 
 export const postVerifyEmail = async (token: string): Promise<TokenSet> => {
-    const { data, error } = await createApiClient().POST("/auth/verify-email/{token}", {
+    const { data, error } = await createApiClient().POST("/users/verify-email/{token}", {
         headers: { 'Content-Type': 'application/json' },
         params: { path: { token: token } },
     })

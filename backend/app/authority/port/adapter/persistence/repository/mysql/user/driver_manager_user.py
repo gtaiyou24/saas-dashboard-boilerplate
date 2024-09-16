@@ -28,6 +28,17 @@ class DriverManagerUser:
                 .filter(UsersTableRow.id.in_([_id.value for _id in user_id]))
             return set([tr.to_entity() for tr in table_rows])
 
+    def find_one_by(self, **kwargs) -> User | None:
+        with self.__unit_of_work.query() as q:
+            optional: UsersTableRow | None = q.query(UsersTableRow).filter_by(**kwargs).one_or_none()
+            if optional is None:
+                return None
+            return optional.to_entity()
+
+    def find_all_by(self, **kwargs) -> list[User]:
+        with self.__unit_of_work.query() as q:
+            return [e.to_entity() for e in q.query(UsersTableRow).filter_by(**kwargs).all()]
+
     def find_by_email_address(self, email_address: EmailAddress) -> User | None:
         with self.__unit_of_work.query() as q:
             optional: UsersTableRow | None = q.query(UsersTableRow)\
