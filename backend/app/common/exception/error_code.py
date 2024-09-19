@@ -35,6 +35,8 @@ class ErrorCode(Enum):
     COMMON_2003 = ("無効なデータです", ErrorLevel.WARN, HTTPStatus.UNPROCESSABLE_ENTITY)
 
     # API Gateway
+    AUTHORIZATION_FAILURE = ("認証に失敗しました。", ErrorLevel.WARN, HTTPStatus.FORBIDDEN)
+    INVALID_TOKEN = ("トークンが存在しない、もしくはトークンの有効期限が切れてます。", ErrorLevel.WARN, HTTPStatus.FORBIDDEN)
 
     # Authority
     VALID_TOKEN_DOES_NOT_EXISTS = (

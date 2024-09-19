@@ -1,9 +1,16 @@
+from __future__ import annotations
+
 import time
 
+import jwt
+from di import DIContainer
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from starlette.middleware.base import BaseHTTPMiddleware, RequestResponseEndpoint
 from starlette.requests import Request
 from starlette.responses import Response
+
+from apigateway.application.authorization import AuthorizationApplicationService
+from apigateway.application.authorization.dpo import InternalTokenDpo
 
 
 class MonitoringMiddleware(BaseHTTPMiddleware):
@@ -26,27 +33,22 @@ class PublishInternalTokenMiddleware(BaseHTTPMiddleware):
     * https://qiita.com/KWS_0901/items/00446f9df1cdaadf36fc
     """
     http_bearer = HTTPBearer(auto_error=False)
+    __authorization_application_service: AuthorizationApplicationService | None = None
+
+    @property
+    def authorization_application_service(self) -> AuthorizationApplicationService:
+        self.__authorization_application_service = (
+            self.__authorization_application_service or DIContainer.instance().resolve(AuthorizationApplicationService)
+        )
+        return self.__authorization_application_service
 
     async def dispatch(self, request: Request, call_next: RequestResponseEndpoint) -> Response:
         authorization: HTTPAuthorizationCredentials | None = await self.http_bearer(request)
         if authorization is None:
             return await call_next(request)
 
-        # external_token = authorization.credentials
-        # internal_token_id = uuid.uuid4()
-        # now = datetime.datetime.now()
-        # exp = now + datetime.timedelta(seconds=10)
-        # payload = {
-        #     "iss": "api-gateway",  # JWTの発行者を表す識別子(issuer)。マイクロサービス化した場合は、API Gateway から発行されるため、API Gateway の URLとなる。
-        #     "sub": "internal-token",  # ユーザーの識別子(subject)。通常ユーザーのIDとなる。
-        #     "aud": request.url,  # JWTを利用するクライアント識別子で最初にリクエストを受信するモジュール名ないしはマイクロサービス名(audience)。通常 URI 形式で提供される。
-        #     "iat": int(round(now.timestamp())),  # JWT の発行日時のタイムスタンプ(issued at)
-        #     "nbf": int(round(now.timestamp())),  # JWT が有効となる日時のタイムスタンプ(not before)
-        #     "exp": int(round(exp.timestamp())),  # JWT の有効期限のタイムスタンプ(expiration)
-        #     "jti": internal_token_id,  # JWT の一意な識別子
-        #     "user_id": str(uuid.uuid4()),
-        #     "belong_to": [{"id": "テナント1のID", "projects": ["プロジェクト1"]}, {"id": "テナント2のID", "projects": ["プロジェクト2"]}]
-        # }
-        # request.headers.__dict__["_list"].append((b'x-internal-token', b'yyy'))
+        dpo = self.authorization_application_service.publish_internal_token(authorization.credentials)
+        jwt = dpo.add_audience(str(request.url)).generate_jwt()
+        request.headers.__dict__["_list"].append((b'x-internal-token', jwt.encode()))
         response = await call_next(request)
         return response

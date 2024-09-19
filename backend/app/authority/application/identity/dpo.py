@@ -1,6 +1,5 @@
 from dataclasses import dataclass
 
-from apigateway.domain.model.session import Session
 from authority.domain.model.tenant import Tenant
 from authority.domain.model.tenant.project import Project
 from authority.domain.model.user import User
@@ -12,15 +11,10 @@ class TenantDpo:
 
 
 @dataclass(init=True, unsafe_hash=True, frozen=True)
-class SessionDpo:
-    session: Session
-
-
-@dataclass(init=True, unsafe_hash=True, frozen=True)
 class UserDpo:
     user: User
     tenants: list[Tenant]
-    projects: list[Project]
+    # projects: list[Project]
 
     def has_tenant(self, tenant_id: str) -> bool:
         for e in self.tenants:

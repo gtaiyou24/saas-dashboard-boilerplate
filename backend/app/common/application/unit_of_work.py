@@ -3,7 +3,7 @@ from __future__ import annotations
 import abc
 
 
-class UnitOfWork(abc.ABC):
+class UnitOfWork[T](abc.ABC):
     """UnitOfWorkの抽象クラス。
 
     UnitOfWork の詳細は以下をご確認ください。
@@ -17,19 +17,19 @@ class UnitOfWork(abc.ABC):
     """
 
     @abc.abstractmethod
-    def mark(self, instance: object) -> None:
+    def mark(self, instance: T) -> None:
         """UnitOfWorkの追跡対象に追加
 
         self.mark() に指定されたインスタンスは self.persist() にて、更新するインスタンスか新規作成するインスタンスかどうかの判定に用いる。
         """
 
     @abc.abstractmethod
-    def persist(self, instance: object) -> None:
+    def persist(self, instance: T) -> None:
         """永続化対象としてインスタンスを追跡する"""
         pass
 
     @abc.abstractmethod
-    def delete(self, *instances: object) -> None:
+    def delete(self, *instances: T) -> None:
         """削除対象としてインスタンスを追跡する"""
         pass
 

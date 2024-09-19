@@ -5,7 +5,6 @@ from datetime import datetime
 
 from authority.domain.model.mail import EmailAddress
 from authority.domain.model.user.account import Account
-from apigateway.domain.model.session import SessionId, Session
 from authority.domain.model.user import Token, EncryptionService, UserId, VerificationTokenGenerated, \
     PasswordResetTokenGenerated
 from common.domain.model import DomainRegistry, DomainEventPublisher
@@ -112,12 +111,6 @@ class User:
                 .publish(PasswordResetTokenGenerated(self.id, self.email_address, token))
 
         return token
-
-    def login(self, session_id: SessionId) -> Session:
-        """アクセストークンとリフレッシュトークンを発行してログインする"""
-        if not self.is_verified():
-            raise PermissionError("ユーザー認証が完了していないため、ログインできません。")
-        return Session.publish(session_id, self.id)
 
     def verified(self) -> None:
         """ユーザー確認を完了できる"""

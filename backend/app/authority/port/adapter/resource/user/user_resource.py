@@ -1,12 +1,15 @@
 from di import DIContainer
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 
 from authority.application.identity import IdentityApplicationService
-from authority.application.identity.command import RegisterUserCommand, ForgotPasswordCommand, ResetPasswordCommand
+from authority.application.identity.command import RegisterUserCommand, ForgotPasswordCommand, ResetPasswordCommand, \
+    AuthenticateCommand
 from authority.port.adapter.resource.user.request import RegisterTenantRequest, ForgotPasswordRequest, \
-    ResetPasswordRequest
+    ResetPasswordRequest, OAuth2PasswordRequest
+from authority.port.adapter.resource.user.response import UserJson
 
 from common.port.adapter.resource import APIResource
+from dependency import GetCurrentUser, CurrentUser
 
 
 class UserResource(APIResource):
@@ -20,6 +23,7 @@ class UserResource(APIResource):
         # self.router.add_api_route("/forgot-password", self.forgot_password, methods=["POST"], name='パスワードリセット')
         # self.router.add_api_route("/reset-password", self.reset_password, methods=["POST"], name='パスワード再設定')
         # self.router.add_api_route("/change-password", self.change_password, methods=["POST"], name="パスワード更新")
+        self.router.add_api_route("/me", self.me, methods=["GET"], name="ログインユーザー情報取得", response_model=UserJson)
 
     @property
     def identity_application_service(self) -> IdentityApplicationService:
@@ -54,3 +58,12 @@ class UserResource(APIResource):
 
     def change_password(self) -> None:
         pass
+
+    def me(self, current_user: CurrentUser = Depends(GetCurrentUser({'ALL'}))) -> UserJson:
+        dpo = self.identity_application_service.user(current_user.id)
+        return UserJson.from_(dpo)
+
+    def authenticate(self, request: OAuth2PasswordRequest) -> UserJson:
+        command = AuthenticateCommand(request.email_address, request.password)
+        dpo = self.identity_application_service.authenticate(command)
+        return UserJson.from_(dpo)

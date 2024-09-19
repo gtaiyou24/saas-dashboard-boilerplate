@@ -7,7 +7,7 @@ from authority.application.identity.subscriber import VerificationTokenGenerated
 from authority.domain.model.mail import SendMailService, EmailAddress
 from authority.domain.model.tenant import TenantRepository, Tenant
 from authority.domain.model.tenant.project import ProjectRepository
-from authority.domain.model.user import UserRepository, User, Token
+from authority.domain.model.user import UserRepository, User, Token, UserId
 from common.application import transactional
 from common.domain.model import DomainEventPublisher
 from common.exception import SystemException, ErrorCode
@@ -101,7 +101,7 @@ class IdentityApplicationService:
 
     @transactional
     def authenticate(self, command: AuthenticateCommand) -> UserDpo:
-        """ユーザー認証し、セッションを発行する"""
+        """ユーザー認証する"""
         email_address = EmailAddress(command.email_address)
         user = self.user_repository.user_with_email_address(email_address)
 
@@ -120,4 +120,13 @@ class IdentityApplicationService:
             raise SystemException(ErrorCode.USER_IS_NOT_VERIFIED,
                                   "メールアドレスの認証が完了していません。認証メールを送信しました。")
 
-        return UserDpo(user, [], [])
+        return UserDpo(user, [])
+
+    def user(self, user_id: str) -> UserDpo:
+        user_id = UserId(user_id)
+        user = self.user_repository.get(user_id)
+        if user is None:
+            SystemException(ErrorCode.USER_DOES_NOT_FOUND, f'ユーザー {user_id.value} は見つかりませんでした。')
+
+        tenants = self.tenant_repository.tenants_with_user_id(user_id)
+        return UserDpo(user, tenants)
