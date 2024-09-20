@@ -5,7 +5,7 @@ import datetime
 import uuid
 from dataclasses import dataclass
 from enum import Enum
-from typing import Literal
+from typing import Literal, Callable
 
 import pytz
 
@@ -24,8 +24,24 @@ class BearerToken(abc.ABC):
     * https://tex2e.github.io/rfc-translater/html/rfc7009.html
     """
     class Type(Enum):
-        ACCESS = "access_token"
-        REFRESH = "refresh_token"
+        ACCESS = ("access_token", lambda user_id, value, published_at, expires_at, pair_token: AccessToken(
+            user_id, value, published_at, expires_at, pair_token))
+        REFRESH = ("refresh_token", lambda user_id, value, published_at, expires_at, pair_token: RefreshToken(
+            user_id, value, published_at, expires_at, pair_token))
+
+        def __init__(self,
+                     key: str,
+                     make: Callable[[UserId, str, datetime.datetime, datetime.datetime, str], BearerToken]):
+            self.__key = key
+            self.__make = make
+
+        def make(self,
+                 user_id: UserId,
+                 value: str,
+                 published_at: datetime.datetime,
+                 expires_at: datetime.datetime,
+                 pair_token: str) -> BearerToken:
+            return self.__make(user_id, value, published_at, expires_at, pair_token)
 
     type: Type
     user_id: UserId

@@ -3,11 +3,12 @@ from fastapi import APIRouter, Depends
 from fastapi.security import OAuth2PasswordRequestForm
 
 from apigateway.application.authorization import AuthorizationApplicationService
-from apigateway.application.authorization.command import AuthenticateCommand
+from apigateway.application.authorization.command import AuthenticateCommand, RevokeCommand
 from apigateway.port.adapter.resource.auth.request import OAuth2PasswordRequest
 from apigateway.port.adapter.resource.auth.response import TokenJson
 from common.port.adapter.resource import APIResource
 from common.port.adapter.resource.error import ErrorJson
+from dependency import oauth2_scheme
 
 
 class AuthResource(APIResource):
@@ -33,7 +34,7 @@ class AuthResource(APIResource):
             name='トークンを発行'
         )
         # self.router.add_api_route("/token", self.refresh, methods=["PUT"], response_model=TokenJson, name='トークンを更新')
-        # self.router.add_api_route("/token", self.revoke, methods=["DELETE"], name='トークンを削除')
+        self.router.add_api_route("/token", self.revoke, methods=["DELETE"], name='トークンを削除')
 
     @property
     def authorization_application_service(self) -> AuthorizationApplicationService:
@@ -58,8 +59,8 @@ class AuthResource(APIResource):
     #     command = RefreshCommand(token)
     #     dpo = self.authorization_application_service.refresh(command)
     #     return TokenJson.from_(dpo)
-    #
-    # def revoke(self, token: str = Depends(oauth2_scheme)) -> None:
-    #     """トークンを削除"""
-    #     command = RevokeCommand(token)
-    #     self.authorization_application_service.revoke(command)
+
+    def revoke(self, token: str = Depends(oauth2_scheme)) -> None:
+        """トークンを削除"""
+        command = RevokeCommand(token)
+        self.authorization_application_service.revoke(command)

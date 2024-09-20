@@ -44,11 +44,11 @@ class TokenKeyValue(KeyValue[BearerToken]):
 
     @override
     def to_entity(self) -> BearerToken:
-        if self.value['type'] == BearerToken.Type.ACCESS.name:
-            return AccessToken(
-                UserId(self.value['user_id']),
-                self.value['value'],
-                datetime.datetime.strptime(self.value['published_at'], '%Y-%m-%d %H:%M:%S'),
-                datetime.datetime.strptime(self.value['expires_at'], '%Y-%m-%d %H:%M:%S'),
-                self.value['pair_token']
-            )
+        tz = pytz.timezone('Asia/Tokyo')
+        return BearerToken.Type[self.value['type']].make(
+            UserId(self.value['user_id']),
+            self.value['value'],
+            datetime.datetime.strptime(self.value['published_at'], '%Y-%m-%d %H:%M:%S').astimezone(tz),
+            datetime.datetime.strptime(self.value['expires_at'], '%Y-%m-%d %H:%M:%S').astimezone(tz),
+            self.value['pair_token']
+        )
