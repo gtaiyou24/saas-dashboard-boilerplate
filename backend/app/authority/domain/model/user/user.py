@@ -40,6 +40,7 @@ class User:
         accounts = set()
         verified_at = None
         if account:
+            # GitHub や Google で登録した場合、account が存在します。この場合、メアド認証は不要になるので enable を True にします。
             enable = True
             accounts.add(account)
             verified_at = datetime.now()

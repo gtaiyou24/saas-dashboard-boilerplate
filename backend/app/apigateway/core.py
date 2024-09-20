@@ -8,6 +8,7 @@ from apigateway.domain.model.token import TokenRepository
 from apigateway.domain.model.user import UserService
 from apigateway.port.adapter.persistence.repository.redis.token import RedisTokenRepository
 from apigateway.port.adapter.resource.auth import AuthResource
+from apigateway.port.adapter.resource.auth.google import GoogleResource
 from apigateway.port.adapter.resource.health import HealthResource
 from apigateway.port.adapter.service.secret import SecretManagerServiceImpl
 from apigateway.port.adapter.service.secret.adapter import SecretManagerAdapter
@@ -39,5 +40,6 @@ class ApiGateway(AppModule):
     def router(self) -> APIRouter:
         router = APIRouter(tags=["API Gateway"])
         router.include_router(AuthResource().router)
+        router.include_router(GoogleResource().router)
         router.include_router(HealthResource().router)
         return router
