@@ -19,3 +19,10 @@ class ForgotPasswordRequest(BaseModel):
 class ResetPasswordRequest(BaseModel):
     token: str = Field(title="パスワードリセットトークン")
     password: str = Field(title="パスワード")
+
+
+class AuthorizationCodeRequest(BaseModel):
+    code: str = Field(title='認証コード')
+    redirect_uri: str = Field(title='リダイレクトURI')
+    code_verifier: str | None = Field(title='コード検証'),
+    grant_type: str = Field(title='タイプ')

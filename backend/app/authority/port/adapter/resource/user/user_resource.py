@@ -5,7 +5,7 @@ from authority.application.identity import IdentityApplicationService
 from authority.application.identity.command import RegisterUserCommand, ForgotPasswordCommand, ResetPasswordCommand, \
     AuthenticateCommand
 from authority.port.adapter.resource.user.request import RegisterTenantRequest, ForgotPasswordRequest, \
-    ResetPasswordRequest, OAuth2PasswordRequest
+    ResetPasswordRequest, OAuth2PasswordRequest, AuthorizationCodeRequest
 from authority.port.adapter.resource.user.response import UserJson
 
 from common.port.adapter.resource import APIResource
@@ -66,4 +66,8 @@ class UserResource(APIResource):
     def authenticate(self, request: OAuth2PasswordRequest) -> UserJson:
         command = AuthenticateCommand(request.email_address, request.password)
         dpo = self.identity_application_service.authenticate(command)
+        return UserJson.from_(dpo)
+
+    def authenticate_with_account(self, request: AuthorizationCodeRequest) -> UserJson:
+        dpo = self.identity_application_service.authenticate()
         return UserJson.from_(dpo)

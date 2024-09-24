@@ -1,6 +1,7 @@
 from injector import singleton, inject
 
-from apigateway.application.authorization.command import AuthenticateCommand, RefreshCommand, RevokeCommand
+from apigateway.application.authorization.command import AuthenticateCommand, RefreshCommand, RevokeCommand, \
+    AuthenticateEmailPasswordCommand, AuthenticateAccountCommand
 from apigateway.application.authorization.dpo import TokenDpo, UserDpo, InternalTokenDpo
 from apigateway.domain.model.secret import SecretManagerService, Key
 from apigateway.domain.model.token import TokenRepository, RefreshToken, BearerToken
@@ -24,12 +25,17 @@ class AuthorizationApplicationService:
     @transactional
     def authenticate(self, command: AuthenticateCommand) -> TokenDpo:
         """ユーザー認証し、アクセストークン、リフレッシュトークンを発行する"""
-        email_address = EmailAddress(command.email_address)
-        user = self.user_service.authenticate(email_address, command.plain_password)
+        if command.oauth_type == AuthenticateCommand.OAuthType.CREDENTIAL:
+            command: AuthenticateEmailPasswordCommand
+            email_address = EmailAddress(command.email_address)
+            user = self.user_service.authenticate(email_address, command.plain_password)
+        else:
+            command: AuthenticateAccountCommand
+            user = self.user_service.authenticate_with(
+                command.oauth_type.name, command.code, command.redirect_uri, command.code_verifier)
 
         if user is None:
-            raise SystemException(ErrorCode.AUTHORIZATION_FAILURE,
-                                  f"メールアドレス {email_address.text} と入力パスワードに合致するユーザーがいません。")
+            raise SystemException(ErrorCode.AUTHORIZATION_FAILURE, str(command))
 
         access_token, refresh_token = user.login()
         self.token_repository.add(access_token)

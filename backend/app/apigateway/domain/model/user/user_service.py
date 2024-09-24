@@ -1,4 +1,5 @@
 import abc
+from typing import Literal
 
 from apigateway.domain.model.user import EmailAddress, User, UserId
 
@@ -6,6 +7,10 @@ from apigateway.domain.model.user import EmailAddress, User, UserId
 class UserService(abc.ABC):
     @abc.abstractmethod
     def authenticate(self, email_address: EmailAddress, plain_password: str) -> User | None:
+        pass
+
+    @abc.abstractmethod
+    def authenticate_with(self, account: Literal["GOOGLE", "GITHUB"], code: str, redirect_uri: str, code_verifier: str) -> User | None:
         pass
 
     @abc.abstractmethod
